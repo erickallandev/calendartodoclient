@@ -36,6 +36,14 @@ export const BoxCalendarHeader = styled.div`
     color: #FFF;
 `;
 
+export const BoxSubheader = styled.div`
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
 export const Title = styled.div`
     width: 100%;
     height: 60%;
@@ -57,6 +65,22 @@ export const Subtitle = styled.div`
     font-size: 1.2rem;
     letter-spacing: 1px;
 `;  
+
+export const Button = styled.div`
+    padding: 15px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #3A7CA5;
+    margin-left: 10px;
+    margin-bottom: -20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: 0.1s;
+        :hover{
+            margin-bottom: -10px;
+        }
+`;
 
 export const Calendar = styled.div`
     display: flex;
@@ -100,6 +124,10 @@ export const Icon = styled.div`
     width: 30px;
     height: 30px;
     cursor: pointer;
+    transition: 0.2s;
+    :hover {
+        scale: 1.1;
+    }
 `;
 
 export const ImageArrowL = styled.img`

@@ -30,7 +30,7 @@ const App = () => {
         }
     ]
 
-    return(
+    return (
         <C.Container>
             <C.Screen>
                 <C.BoxCalendar>
@@ -38,9 +38,20 @@ const App = () => {
                         <C.Title>
                             Applaneje-se
                         </C.Title>
-                        <C.Subtitle>
-                            Sábado, 22 de Outubro de 2022 || 15:40:21
-                        </C.Subtitle>
+                        <C.BoxSubheader>
+                            <C.Subtitle>
+                                Sábado, 22 de Outubro de 2022 || 15:40:21
+                            </C.Subtitle>
+                            <C.Button>
+                                Mês
+                            </C.Button>
+                            <C.Button>
+                                Semana
+                            </C.Button>
+                            <C.Button>
+                                Dia
+                            </C.Button>
+                        </C.BoxSubheader>
                     </C.BoxCalendarHeader>
                     <C.Calendar>
                         <C.CalendarHeader>
@@ -52,7 +63,7 @@ const App = () => {
                                     Outubro - 2022
                                 </C.CalendarTitle>
                                 <C.Icon>
-                                <C.ImageArrowR src={arrow} alt='' />
+                                    <C.ImageArrowR src={arrow} alt='' />
                                 </C.Icon>
                             </C.CalendarHeader1>
                             <C.CalendarHeader2>
