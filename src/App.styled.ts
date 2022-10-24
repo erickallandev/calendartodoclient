@@ -226,13 +226,12 @@ export const TodoList = styled.div`
 
 export const TodoItem = styled.div`
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 70px;
     min-height: 70px;
     background-color: #3A7CA5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     font-size: 0.8rem;
     color: #FFF;
     border-bottom-right-radius: 20px;
@@ -240,6 +239,14 @@ export const TodoItem = styled.div`
         :nth-child(2n) {
             background-color: #1D5676;
         }
+`;
+
+export const ItemDetails = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex;
+    justify-content: flex-start;
+    width: 80%;
 `;
 
 export const ItemTitle = styled.div`
@@ -258,7 +265,26 @@ export const ItemDatetime = styled.div`
     margin-left: 5%;
 `;
 
+export const ItemButtons = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+`;
 
+export const ItemButtonExcluir = styled.div`
+    width: 20px;
+    height: 20px;
+    background-color: #F00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+        :hover {
+            border: 1px solid #F00;
+        }
+`;
 
 
 

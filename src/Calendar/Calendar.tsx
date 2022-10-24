@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Props } from "./CalendarTypes";
+import { EventType } from "./CalendarTypes";
 import moment from 'moment';
 import 'moment/locale/pt';
 import './App.styles.css';
@@ -6,10 +8,9 @@ import buildCalendar from './buildCalendar';
 import { dayStyles, beforeToday } from './styles';
 import {CalendarHeader} from './CalendarHeader';
 
-export default function Calendar() {
+export default function Calendar({ value, setValue }: Props, eventsList: EventType[]) {
     moment.locale('pt');
     const [calendar, setCalendar] = useState<moment.Moment[][]>([]);
-    const [value, setValue] = useState(moment());
 
     useEffect(() => {
         setCalendar(buildCalendar(value));

@@ -2,20 +2,24 @@ import * as C from './App.styled';
 import Calendar from './Calendar';
 import { useState } from 'react';
 import moment from 'moment';
-
+import { EventType } from './Calendar/CalendarTypes';
+import { useEffect } from 'react';
 
 
 const App = () => {
-   let dateToday = new Date().toLocaleDateString('pt-Br', {
+    let dateToday = new Date().toLocaleDateString('pt-Br', {
         dateStyle: 'full'
     });
 
+    const [value, setValue] = useState(moment());
     const [addEventOn, setAddEventOn] = useState(false);
     const [newTitle, setNewTitle] = useState<string>('');
     const [newDescription, setNewDescription] = useState<string>('');
     const [newDate, setNewDate] = useState<string>('');
     const [newTimeStart, setNewTimeStart] = useState<string>('');
     const [newTimeEnd, setNewTimeEnd] = useState<string>('');
+    const [allEvents, setAllEvents] = useState<EventType[]>();
+    const [filteredEvents, setFilteredEvents] = useState<EventType[]>();
 
     const handleClickAddEventOff = () => {
         setAddEventOn(false)
@@ -26,7 +30,43 @@ const App = () => {
         setNewTimeEnd('');
     }
 
-    const onSubmitNewEvent = async (e:React.FormEvent) => {
+    const getEvents = async () => {
+        try {
+            const response = await fetch('https://calendartodoproject.herokuapp.com/todos');
+            const jsonData = await response.json();
+            setAllEvents(jsonData.todos);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                return {
+                    message: `Ocorreu um erro ao carregar os eventos. (${err.message})`
+                }
+            }
+        }
+    }
+
+    const handleDeleteTodo = async (id: any) => {
+        try {
+            await fetch(`https://calendartodoproject.herokuapp.com/todos/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                return {
+                    message: `Ocorreu um erro ao carregar os eventos. (${err.message})`
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        getEvents();
+    }, [allEvents, filteredEvents]);
+
+    const onSubmitNewEvent = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const body = {
@@ -49,7 +89,7 @@ const App = () => {
             setNewTimeEnd('');
             setAddEventOn(false);
         } catch (err: unknown) {
-            if(err instanceof Error) {
+            if (err instanceof Error) {
                 return {
                     message: `Ocorreu um erro ao adicionar o novo evento. (${err.message})`
                 }
@@ -57,8 +97,9 @@ const App = () => {
         }
     }
 
+
     return (
-    
+
         <C.Container>
             <C.Screen>
                 <C.BoxCalendar>
@@ -105,7 +146,7 @@ const App = () => {
 
                     </C.CalendarInput>
                     <C.Calendar>
-                        <Calendar />
+                        <Calendar value={value} setValue={setValue} />
                     </C.Calendar>
                 </C.BoxCalendar>
                 <C.BoxSide>
@@ -115,124 +156,28 @@ const App = () => {
                         </C.SearchBox>
                     </C.BoxSideSearch>
                     <C.TodoList>
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 1 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
 
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 2 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
+                        {allEvents &&
+                            allEvents.map((item, index) => (
+                                <C.TodoItem key={index}>
+                                    <C.ItemDetails>
+                                        <C.ItemTitle>
+                                            {item.title}
+                                        </C.ItemTitle>
+                                        <C.ItemSubtitle>
+                                            {item.description}
+                                        </C.ItemSubtitle>
+                                        <C.ItemDatetime>
+                                            {moment(item.date).format('DD/MM/YYYY')} || {item.timestart} - {item.timeend}
+                                        </C.ItemDatetime>
+                                    </C.ItemDetails>
+                                    <C.ItemButtons>
+                                        <C.ItemButtonExcluir onClick={() => handleDeleteTodo(item.id)}>X</C.ItemButtonExcluir>
+                                    </C.ItemButtons>
+                                </C.TodoItem>
+                            ))
+                        }
 
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 3 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 4 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 5 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 6 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 7 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 8 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 9 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
-                        <C.TodoItem>
-                            <C.ItemTitle>
-                                Título da atividade 10 (Duração: 2 horas)
-                            </C.ItemTitle>
-                            <C.ItemSubtitle>
-                                Subtítulo da atividade 1
-                            </C.ItemSubtitle>
-                            <C.ItemDatetime>
-                                08:00 - 10:00 | 22/10/2022
-                            </C.ItemDatetime>
-                        </C.TodoItem>
                     </C.TodoList>
                 </C.BoxSide>
             </C.Screen>
