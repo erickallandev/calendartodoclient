@@ -85,15 +85,13 @@ export const Button = styled.div`
 export const Calendar = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80%;
+    height: 90%;
     width: 100%;
 `;
 
 export const CalendarHeader = styled.div`
     background-color: #3A7CA5;
-    width: 95%;
+    width: 100%;
     height: 15%;
     margin-bottom: 2px;
     border-top-left-radius: 20px;
@@ -113,7 +111,7 @@ export const CalendarTitle = styled.div`
     align-items: center;
     justify-content: center;
     color: #FFF;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
 `;
 
@@ -128,6 +126,7 @@ export const Icon = styled.div`
     :hover {
         scale: 1.1;
     }
+
 `;
 
 export const ImageArrowL = styled.img`
@@ -152,6 +151,7 @@ export const Weekday = styled.div`
     justify-content: center;
     align-items: center;
     flex: 1;
+    font-weight: 600;
     color: #fff;
 `;
 

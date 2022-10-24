@@ -1,36 +1,15 @@
 import * as C from './App.styled';
-import arrow from './assets/images/icons/arrow.png';
+import { useState } from 'react';
+import Calendar from './Calendar';
+
 
 const App = () => {
-
-    let todos = [
-        {
-            "id": 1,
-            "title": "Tarefa de teste",
-            "description": "Descrição da tarefa de teste",
-            "date": "2022-10-21",
-            "timestart": "21:02",
-            "timeend": "21:23"
-        },
-        {
-            "id": 2,
-            "title": "Tarefa de teste",
-            "description": "Descrição da tarefa de teste",
-            "date": "2022-10-22",
-            "timestart": "21:02",
-            "timeend": "21:23"
-        },
-        {
-            "id": 3,
-            "title": "Atividade 3",
-            "description": "Descrição da atividade 3",
-            "date": "2022-10-27",
-            "timestart": "10:00",
-            "timeend": "11:00"
-        }
-    ]
+   let dateToday = new Date().toLocaleDateString('pt-Br', {
+        dateStyle: 'full'
+    });
 
     return (
+    
         <C.Container>
             <C.Screen>
                 <C.BoxCalendar>
@@ -38,10 +17,14 @@ const App = () => {
                         <C.Title>
                             Applaneje-se
                         </C.Title>
+
                         <C.BoxSubheader>
                             <C.Subtitle>
-                                Sábado, 22 de Outubro de 2022 || 15:40:21
+                                {dateToday}
                             </C.Subtitle>
+                            <C.Button>
+                                +
+                            </C.Button>
                             <C.Button>
                                 Mês
                             </C.Button>
@@ -54,46 +37,7 @@ const App = () => {
                         </C.BoxSubheader>
                     </C.BoxCalendarHeader>
                     <C.Calendar>
-                        <C.CalendarHeader>
-                            <C.CalendarHeader1>
-                                <C.Icon>
-                                    <C.ImageArrowL src={arrow} alt='' />
-                                </C.Icon>
-                                <C.CalendarTitle>
-                                    Outubro - 2022
-                                </C.CalendarTitle>
-                                <C.Icon>
-                                    <C.ImageArrowR src={arrow} alt='' />
-                                </C.Icon>
-                            </C.CalendarHeader1>
-                            <C.CalendarHeader2>
-                                <C.Weekday>
-                                    Dom
-                                </C.Weekday>
-                                <C.Weekday>
-                                    Seg
-                                </C.Weekday>
-                                <C.Weekday>
-                                    Ter
-                                </C.Weekday>
-                                <C.Weekday>
-                                    Qua
-                                </C.Weekday>
-
-                                <C.Weekday>
-                                    Qui
-                                </C.Weekday>
-                                <C.Weekday>
-                                    Sex
-                                </C.Weekday>
-                                <C.Weekday>
-                                    Sáb
-                                </C.Weekday>
-                            </C.CalendarHeader2>
-                        </C.CalendarHeader>
-                        <C.CalendarBody>
-
-                        </C.CalendarBody>
+                        <Calendar />
                     </C.Calendar>
                 </C.BoxCalendar>
                 <C.BoxSide>
