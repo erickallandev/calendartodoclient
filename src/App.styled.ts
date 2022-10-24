@@ -257,3 +257,94 @@ export const ItemDatetime = styled.div`
     width: 95%;
     margin-left: 5%;
 `;
+
+
+
+
+
+export const CalendarInput = styled.div<{addEventOn: boolean}>`
+    display: ${p => (p.addEventOn ? 'flex' : 'none')};
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    width: 50%;
+    height: 400px;
+    position: absolute;
+    background-color: #FFF;
+    box-shadow: 0 0 30px #000;
+    z-index: 20;
+`;
+
+export const CIHeader = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 20%;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3A7CA5;
+`;
+
+export const CIInputArea = styled.div`
+    display: flex;
+    width: 80%;
+    height: 80%;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+`;
+
+export const Input = styled.input`
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    text-align: center;
+`;
+
+export const ButtonsArea = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const Button2 = styled.button`
+    padding: 9px 20px;
+    background-color: #3A7CA5;
+    width: 50%;
+    border-radius: 20px;
+    border: 2px solid #3A7CA5;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    transition: 0.3s;
+        :hover {
+            border: 2px solid #FFF;
+        }
+`;
+
+export const Button1 = styled.button`
+    padding: 9px 20px;
+    background-color: #FFF;
+    width: 50%;
+    border-radius: 20px;
+    border: 2px solid #808080;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #808080;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;

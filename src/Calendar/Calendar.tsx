@@ -15,25 +15,6 @@ export default function Calendar() {
         setCalendar(buildCalendar(value));
     }, [value])
 
-    const Events = [{
-        Titulo: 'Evento 1',
-        Descrição: 'Descrição do evento 1',
-        Data_inicio: moment(new Date(2022, 9, 21)).format('L'),
-        Hora_inicio: '18:50'
-    }, 
-    {
-        Titulo: 'Evento 2',
-        Descrição: 'Descrição do evento 2',
-        Data_inicio: moment(new Date(2022, 9, 21)).format('L'),
-        Hora_inicio: '19:50'
-    },
-    {
-        Titulo: 'Evento 3',
-        Descrição: 'Descrição do evento 3',
-        Data_inicio: moment(new Date(2022, 9, 23)).format('L'),
-        Hora_inicio: '08:00'
-    }]
-
     return (
         <div className='display'>
             <div className='calendar'>
@@ -46,14 +27,6 @@ export default function Calendar() {
                                     <div className='day' onClick={() => !beforeToday(day) && setValue(day)}>
                                         <div className={dayStyles(day, value)}> 
                                             <div className='dia'>{day.format("DD").toString()}</div>
-                                            {Events.map((item, index) => (
-                                                day.format('L') === item.Data_inicio ? 
-                                                <div className='EventMark'>
-                                                    <div>{item.Titulo}</div>
-                                                </div>
-                                                :
-                                                ''
-                                            ))}
                                         </div>
                                     </div>)
                             }

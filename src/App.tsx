@@ -1,11 +1,61 @@
 import * as C from './App.styled';
 import Calendar from './Calendar';
+import { useState } from 'react';
+import moment from 'moment';
+
 
 
 const App = () => {
    let dateToday = new Date().toLocaleDateString('pt-Br', {
         dateStyle: 'full'
     });
+
+    const [addEventOn, setAddEventOn] = useState(false);
+    const [newTitle, setNewTitle] = useState<string>('');
+    const [newDescription, setNewDescription] = useState<string>('');
+    const [newDate, setNewDate] = useState<string>('');
+    const [newTimeStart, setNewTimeStart] = useState<string>('');
+    const [newTimeEnd, setNewTimeEnd] = useState<string>('');
+
+    const handleClickAddEventOff = () => {
+        setAddEventOn(false)
+        setNewTitle('');
+        setNewDescription('');
+        setNewDate('');
+        setNewTimeStart('');
+        setNewTimeEnd('');
+    }
+
+    const onSubmitNewEvent = async (e:React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const body = {
+                title: newTitle,
+                description: newDescription,
+                date: moment(newDate).format('YYYY-MM-DD').toString(),
+                timestart: newTimeStart,
+                timeend: newTimeEnd
+            };
+            await fetch("https://calendartodoproject.herokuapp.com/todos", {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            console.log(body);
+            setNewTitle('');
+            setNewDescription('');
+            setNewDate('');
+            setNewTimeStart('');
+            setNewTimeEnd('');
+            setAddEventOn(false);
+        } catch (err: unknown) {
+            if(err instanceof Error) {
+                return {
+                    message: `Ocorreu um erro ao adicionar o novo evento. (${err.message})`
+                }
+            }
+        }
+    }
 
     return (
     
@@ -21,7 +71,7 @@ const App = () => {
                             <C.Subtitle>
                                 {dateToday}
                             </C.Subtitle>
-                            <C.Button>
+                            <C.Button onClick={() => setAddEventOn(true)}>
                                 +
                             </C.Button>
                             <C.Button>
@@ -35,6 +85,25 @@ const App = () => {
                             </C.Button>
                         </C.BoxSubheader>
                     </C.BoxCalendarHeader>
+                    <C.CalendarInput addEventOn={addEventOn}>
+                        <C.CIHeader>
+                            Cadastrar nova tarefa
+                        </C.CIHeader>
+                        <C.CIInputArea>
+                            <C.Form onSubmit={onSubmitNewEvent}>
+                                <C.Input type='text' placeholder='Insira o título da tarefa' required value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+                                <C.Input type='text' placeholder='Insira a descrição da tarefa' value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                                <C.Input type='date' placeholder='Insira a data da tarefa' required value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+                                <C.Input type='time' placeholder='Insira o horário do início da tarefa' required value={newTimeStart} onChange={(e) => setNewTimeStart(e.target.value)} />
+                                <C.Input type='time' placeholder='Insira o horário de encerramento da tarefa' required value={newTimeEnd} onChange={(e) => setNewTimeEnd(e.target.value)} />
+                                <C.ButtonsArea>
+                                    <C.Button1 onClick={handleClickAddEventOff}>Cancelar</C.Button1>
+                                    <C.Button2>Salvar</C.Button2>
+                                </C.ButtonsArea>
+                            </C.Form>
+                        </C.CIInputArea>
+
+                    </C.CalendarInput>
                     <C.Calendar>
                         <Calendar />
                     </C.Calendar>
