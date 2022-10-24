@@ -1,5 +1,4 @@
 import * as C from './App.styled';
-import { useState } from 'react';
 import Calendar from './Calendar';
 
 
