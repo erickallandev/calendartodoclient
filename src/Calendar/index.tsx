@@ -49,11 +49,11 @@ export default function Calendar({ value, setValue }: Props) {
                                         <div className={dayStyles(day, value)}> 
                                             <div className='dia'>{day.format("DD").toString()}</div>
                                         
-                                                {eventsList && eventsList.length > 1 &&
-                                                eventsList.map((item, index) => (
+                                                {eventsList && eventsList.length > 1 && 
+                                                eventsList.map((item, index) => ( 
                                                 day.format('YYYY-MM-DD') === (item.date) ? 
                                                 <div className='EventMark'>
-                                                    <div key={index}>{item.title}</div>
+                                                    <div key={index}>Há evento(s)</div>
                                                 </div>
                                                 :
                                                 ''
