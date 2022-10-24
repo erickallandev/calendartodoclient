@@ -19,7 +19,6 @@ const App = () => {
     const [newTimeStart, setNewTimeStart] = useState<string>('');
     const [newTimeEnd, setNewTimeEnd] = useState<string>('');
     const [allEvents, setAllEvents] = useState<EventType[]>();
-    const [filteredEvents, setFilteredEvents] = useState<EventType[]>();
 
     const handleClickAddEventOff = () => {
         setAddEventOn(false)
@@ -64,7 +63,7 @@ const App = () => {
 
     useEffect(() => {
         getEvents();
-    }, [allEvents, filteredEvents]);
+    }, [allEvents]);
 
     const onSubmitNewEvent = async (e: React.FormEvent) => {
         e.preventDefault();
